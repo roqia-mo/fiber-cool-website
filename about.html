@@ -48,7 +48,7 @@
         }
 
         .logo img {
-            height: 120px;
+            height: 100px;
             object-fit: contain;
         }
 
@@ -103,14 +103,13 @@
             min-width: 300px;
         }
 
-        /* تعديل الجزء الخاص بالصور والإحصائيات */
         .about-visuals {
             flex: 1;
             min-width: 300px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; /* مسافة متناسقة بين الصورة والبوكس */
+            gap: 20px;
         }
 
         .title {
@@ -177,25 +176,23 @@
             line-height: 1.6;
         }
 
-        /* --- تعديل صورة المنتج لتكون في الأعلى --- */
         .about-image {
             width: 100%;
-            max-width: 450px; /* تكبير الصورة قليلاً لتملأ المساحة بشكل أجمل */
+            max-width: 450px;
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0, 40, 85, 0.15);
         }
 
-        /* --- تعديل صندوق الإحصائيات ليكون أفقياً أسفل الصورة --- */
         .stats-box {
-            display: flex; /* جعله يعرض العناصر بجانب بعضها */
+            display: flex;
             justify-content: space-evenly;
             align-items: center;
             background-color: #ffffff;
             border: 2px solid var(--light-blue);
-            border-radius: 20px; /* تقليل الدوران ليتناسق مع عرض البوكس */
+            border-radius: 20px;
             padding: 20px 10px;
             width: 100%;
-            max-width: 450px; /* بنفس عرض الصورة */
+            max-width: 450px;
             box-shadow: 0 10px 20px rgba(0, 170, 231, 0.1);
         }
 
@@ -208,7 +205,7 @@
 
         .stat-item h2 {
             color: var(--light-blue);
-            font-size: 2.5rem; /* تصغير الخط قليلاً ليناسب العرض */
+            font-size: 2.5rem;
             font-weight: 900;
             line-height: 1;
             margin: 5px 0;
@@ -221,7 +218,6 @@
             font-size: 1rem;
         }
 
-        /* الخط الفاصل بين الإحصائيات أصبح بالطول */
         .divider-line {
             width: 2px;
             height: 60px;
@@ -239,19 +235,9 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        .animate-text {
-            animation: fadeInRight 1s ease-out forwards;
-        }
-
-        .animate-img {
-            opacity: 0; 
-            animation: slideInUp 1.2s ease-out 0.2s forwards;
-        }
-        
-        .animate-stats {
-            opacity: 0;
-            animation: slideInUp 1.2s ease-out 0.4s forwards;
-        }
+        .animate-text { animation: fadeInRight 1s ease-out forwards; }
+        .animate-img { opacity: 0; animation: slideInUp 1.2s ease-out 0.2s forwards; }
+        .animate-stats { opacity: 0; animation: slideInUp 1.2s ease-out 0.4s forwards; }
 
         /* --- الفوتر --- */
         footer {
@@ -267,42 +253,24 @@
             margin-top: auto;
         }
 
-        .footer-info {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
+        .footer-info { display: flex; gap: 30px; align-items: center; }
+        .footer-info a { text-decoration: none; color: var(--dark-blue); transition: color 0.3s ease; }
+        .footer-info a:hover { color: var(--light-blue); }
+        .footer-info .divider { color: var(--light-blue); font-weight: bold; }
+        .catalog-year { color: var(--light-blue); }
 
-        .footer-info a {
-            text-decoration: none;
-            color: var(--dark-blue);
-            transition: color 0.3s ease;
-        }
-
-        .footer-info a:hover {
-            color: var(--light-blue);
-        }
-
-        .footer-info .divider {
-            color: var(--light-blue);
-            font-weight: bold;
-        }
-
-        .catalog-year {
-            color: var(--light-blue);
-        }
-
+        /* --- الموبايل (تم تعديل هذا الجزء) --- */
         @media (max-width: 992px) {
+            nav { flex-direction: column; gap: 15px; }
+            .nav-links { flex-direction: column; gap: 15px; text-align: center; }
             .about-section { flex-direction: column; text-align: center; }
             .cards-container { align-items: center; }
-            nav .nav-links { display: none; }
             footer { flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- القائمة العلوية -->
     <nav>
         <div class="logo">
             <a href="index.html"><img src="logo (1).png" alt="Fiber Cool Logo"></a>
@@ -317,36 +285,26 @@
         </ul>
     </nav>
 
-    <!-- قسم من نحن -->
     <main class="about-section">
-        
-        <!-- الجزء الأيمن (النصوص) -->
         <div class="about-content animate-text">
             <h1 class="title">من نحن</h1>
-            
             <p class="text-paragraph">
                 شركة متخصصة في تصنيع المكيفات الصحراوية عالية الجودة، بخبرة تزيد على <span class="highlight">20 عاماً</span> في تقديم حلول تبريد فعالة ومناسبة للأجواء الحارة.
             </p>
-            
             <p class="text-paragraph">
                 نعتمد على تقنيات حديثة ومواد متينة مثل <span class="highlight">هياكل الفايبر جلاس</span>، والمراوح الحديدية المجلفنة، ووسائط التبريد السيليلوزية لضمان أداء موثوق وعمر طويل.
             </p>
 
             <div class="cards-container">
                 <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-bullseye"></i>
-                    </div>
+                    <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
                     <div class="card-text">
                         <h3>رسالتنا</h3>
                         <p>تقديم منتجات موثوقة تدوم طويلاً، بضمان صيانة يصل إلى <span class="highlight">15 عاماً</span>، ودعم مستمر للعملاء بعد البيع.</p>
                     </div>
                 </div>
-
                 <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-eye"></i>
-                    </div>
+                    <div class="card-icon"><i class="fa-solid fa-eye"></i></div>
                     <div class="card-text">
                         <h3>رؤيتنا</h3>
                         <p>أن نكون الخيار الأول في حلول التبريد الصحراوي عبر الجودة الموثوقة، والابتكار.</p>
@@ -355,40 +313,29 @@
             </div>
         </div>
 
-        <!-- الجزء الأيسر (تم تعديله: الصورة في الأعلى والإحصائيات بالأسفل) -->
         <div class="about-visuals">
-            
-            <!-- الصورة المطلوبة (أصبحت في الأعلى) -->
             <img src="pepr2.png" alt="Fiber Cool Factory" class="about-image animate-img">
-            
-            <!-- صندوق الإحصائيات (أصبح بالعرض أسفل الصورة) -->
             <div class="stats-box animate-stats">
                 <div class="stat-item">
                     <h2>+20</h2>
                     <p>عاماً من الخبرة</p>
                 </div>
-                
                 <div class="divider-line"></div>
-                
                 <div class="stat-item">
                     <h2>15</h2>
                     <p>عام ضمان</p>
                 </div>
             </div>
-            
         </div>
     </main>
 
-    <!-- الفوتر -->
     <footer>
         <div class="footer-info">
             <a href="mailto:FIPERCOOL25@GMAIL.COM"><i class="fa-regular fa-envelope"></i> FIPERCOOL25@GMAIL.COM</a>
             <span class="divider">|</span>
             <a href="tel:0503439476"><i class="fa-solid fa-phone"></i> 0503439476</a>
         </div>
-        <div class="catalog-year">
-            Catalog 2026
-        </div>
+        <div class="catalog-year">Catalog 2026</div>
     </footer>
 
 </body>

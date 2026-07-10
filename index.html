@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فايبير كول | Fiber Cool</title>
+    
+    <!-- استدعاء خط Cairo من جوجل -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- استدعاء مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* تعريف الألوان المستخرجة من الصورة */
+        :root {
+            --dark-blue: #002855;
+            --light-blue: #00aae7;
+            --bg-color: #f4f9ff;
+            --text-gray: #4a5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffffff 0%, var(--bg-color) 100%);
+            color: var(--dark-blue);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- شريط التنقل (القائمة العلوية) --- */
+        nav {
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo img {
+            height: 60px; /* سيتم ضبط الحجم تلقائياً حسب صورتك */
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--dark-blue);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--light-blue);
+            bottom: -5px;
+            right: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: var(--light-blue);
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        /* --- الواجهة الرئيسية (Hero Section) --- */
+        .hero {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 5%;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-title-en {
+            font-family: 'Arial', sans-serif; /* الخط الإنجليزي للحفاظ على شكل الكتالوج */
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .hero-title-en .dark {
+            color: var(--dark-blue);
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .hero-title-en .light {
+            color: var(--light-blue);
+            font-weight: 700;
+        }
+
+        /* الخط الديكوري تحت العنوان */
+        .title-divider {
+            width: 80px;
+            height: 4px;
+            background-color: var(--light-blue);
+            margin: 20px 0;
+            position: relative;
+        }
+        .title-divider::after {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: -2px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--light-blue);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        /* --- قسم المميزات (الأيقونات) --- */
+        .features {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-item i {
+            font-size: 2rem;
+            color: var(--light-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover i {
+            transform: translateY(-5px);
+        }
+
+        .feature-item span {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        /* --- صورة المنتج --- */
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* شكل هندسي خلف الصورة ليعطي طابع الكتالوج */
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 100%;
+            background-color: rgba(0, 170, 231, 0.05);
+            border-radius: 30px;
+            z-index: -1;
+            bottom: -20px;
+            left: -20px;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 40, 85, 0.1);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* --- الشريط السفلي (معلومات الاتصال) --- */
+        footer {
+            background-color: #ffffff;
+            border-top: 2px solid rgba(0, 170, 231, 0.2);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .footer-info a {
+            text-decoration: none;
+            color: var(--dark-blue);
+            transition: color 0.3s ease;
+        }
+
+        .footer-info a:hover {
+            color: var(--light-blue);
+        }
+
+        .footer-info .divider {
+            color: var(--light-blue);
+            font-weight: bold;
+        }
+
+        .catalog-year {
+            color: var(--light-blue);
+        }
+
+        /* --- التجاوب مع شاشات الموبايل --- */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .title-divider {
+                margin: 20px auto;
+            }
+            .title-divider::after {
+                left: auto;
+                right: -15px;
+            }
+            .features {
+                justify-content: center;
+            }
+            .nav-links {
+                display: none; /* يمكن إضافة زر قائمة للموبايل لاحقاً */
+            }
+            footer {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة العلوية -->
+    <nav>
+        <div class="logo">
+            <!-- ضعي هنا مسار صورة اللوجو -->
+            <img src="logo (1).png" alt="Fiber Cool Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about">من نحن</a></li>
+            <li><a href="#services">خدماتنا</a></li>
+            <li><a href="#why-us">لماذا تختارنا؟</a></li>
+            <li><a href="#projects">أعمالنا</a></li>
+            <li><a href="#clients">عملائنا</a></li>
+            <li><a href="#contact">معلومات الاتصال</a></li>
+        </ul>
+    </nav>
+
+    <!-- الواجهة الرئيسية -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-title-en">
+                <div class="dark">CATALOGUE</div>
+                <div class="light">Fiber Cool</div>
+            </div>
+            
+            <div class="title-divider"></div>
+
+            <div class="hero-subtitle">
+                حلول تبريد وتهوية <br> للمصانع والمستودعات والمنشآت
+            </div>
+
+            <div class="features">
+                <div class="feature-item">
+                    <i class="fa-solid fa-wind"></i>
+                    <span>هواء نقي منعش</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-recycle"></i>
+                    <span>توفير الطاقة</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>كفاءة عالية</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <!-- ضعي هنا مسار صورة التكييف/المنتج -->
+            <img src="1 pepr.png" alt="Fiber Cool Unit">
+        </div>
+    </header>
+
+    <!-- الشريط السفلي للاتصال -->
+    <footer>
+        <div class="footer-info">
+            <!-- استخدمت نفس الاسبيلنج المكتوب في صورتك FIPERCOOL25 -->
+            <a href="mailto:FIPERCOOL25@GMAIL.COM"><i class="fa-regular fa-envelope"></i> FIPERCOOL25@GMAIL.COM</a>
+            <span class="divider">|</span>
+            <a href="tel:0503439476"><i class="fa-solid fa-phone"></i> 0503439476</a>
+        </div>
+        <div class="catalog-year">
+            Catalog 2026
+        </div>
+    </footer>
+
+</body>
+</html>

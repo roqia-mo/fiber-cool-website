@@ -18,6 +18,11 @@
             --text-gray: #4a5568;
         }
 
+        /* إضافة خاصية التنقل الناعم */
+        html {
+            scroll-behavior: smooth;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -50,6 +55,20 @@
         .logo img {
             height: 100px;
             object-fit: contain;
+        }
+
+        /* زر القائمة في الجوال */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--dark-blue);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            transform: scale(1.1);
+            color: var(--light-blue);
         }
 
         .nav-links {
@@ -146,6 +165,11 @@
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 40, 85, 0.05);
             max-width: 500px;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
         }
 
         .card-icon {
@@ -259,10 +283,31 @@
         .footer-info .divider { color: var(--light-blue); font-weight: bold; }
         .catalog-year { color: var(--light-blue); }
 
-        /* --- الموبايل (تم تعديل هذا الجزء) --- */
+        /* --- الموبايل --- */
         @media (max-width: 992px) {
-            nav { flex-direction: column; gap: 15px; }
-            .nav-links { flex-direction: column; gap: 15px; text-align: center; }
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none; 
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                padding: 20px 0;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+            }
+            
+            .nav-links.active {
+                display: flex;
+                animation: slideInUp 0.3s ease-out;
+            }
+
             .about-section { flex-direction: column; text-align: center; }
             .cards-container { align-items: center; }
             footer { flex-direction: column; gap: 15px; text-align: center; }
@@ -275,13 +320,19 @@
         <div class="logo">
             <a href="index.html"><img src="logo (1).png" alt="Fiber Cool Logo"></a>
         </div>
-        <ul class="nav-links">
-            <li><a href="about.html" class="active">من نحن</a></li>
-            <li><a href="index.html#services">خدماتنا</a></li>
-            <li><a href="index.html#why-us">لماذا تختارنا؟</a></li>
-            <li><a href="index.html#projects">أعمالنا</a></li>
-            <li><a href="index.html#clients">عملائنا</a></li>
-            <li><a href="index.html#contact">معلومات الاتصال</a></li>
+        
+        <!-- زر القائمة للجوال -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" onclick="closeMenu()">الرئيسية</a></li>
+            <li><a href="about.html" class="active" onclick="closeMenu()">من نحن</a></li>
+            <li><a href="cooling-solutions.html" onclick="closeMenu()">حلول التبريد</a></li>
+            <li><a href="air-systems.html" onclick="closeMenu()">أنظمة التوزيع</a></li>
+            <li><a href="partners.html" onclick="closeMenu()">شركاء النجاح</a></li>
+            <li><a href="contact.html" onclick="closeMenu()">اتصل بنا</a></li>
         </ul>
     </nav>
 
@@ -329,14 +380,29 @@
         </div>
     </main>
 
-    <footer>
+    <!-- تم إضافة المعرف ليعمل زر "اتصل بنا" من القائمة -->
+    <footer id="footer-contact">
         <div class="footer-info">
             <a href="mailto:FIPERCOOL25@GMAIL.COM"><i class="fa-regular fa-envelope"></i> FIPERCOOL25@GMAIL.COM</a>
             <span class="divider">|</span>
             <a href="tel:0503439476"><i class="fa-solid fa-phone"></i> 0503439476</a>
         </div>
-        <div class="catalog-year">Catalog 2026</div>
+        <div class="catalog-year">WEBSITE 2026</div>
     </footer>
 
+    <!-- سكربت قائمة الجوال -->
+    <script>
+        const navLinks = document.getElementById('navLinks');
+        
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            if (window.innerWidth <= 992) {
+                navLinks.classList.remove('active');
+            }
+        }
+    </script>
 </body>
 </html>

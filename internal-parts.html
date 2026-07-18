@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظرة من الداخل | Fiber Cool</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --dark-blue: #002855;
+            --light-blue: #00aae7;
+            --bg-color: #f4f9ff;
+            --text-gray: #4a5568;
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: linear-gradient(135deg, #ffffff 0%, var(--bg-color) 100%); color: var(--dark-blue); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        /* --- شريط التنقل --- */
+        nav { background-color: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo img { height: 100px; object-fit: contain; }
+        .menu-toggle { display: none; font-size: 1.8rem; color: var(--dark-blue); cursor: pointer; transition: transform 0.3s ease; }
+        .menu-toggle:hover { transform: scale(1.1); color: var(--light-blue); }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links li a { text-decoration: none; color: var(--dark-blue); font-weight: 600; font-size: 1rem; transition: color 0.3s ease; position: relative; }
+        .nav-links li a::after { content: ''; position: absolute; width: 0; height: 2px; background-color: var(--light-blue); bottom: -5px; right: 0; transition: width 0.3s ease; }
+        .nav-links li a:hover, .nav-links li a.active-link { color: var(--light-blue); }
+        .nav-links li a:hover::after, .nav-links li a.active-link::after { width: 100%; }
+
+        /* --- قسم نظرة من الداخل --- */
+        .inside-look-section { padding: 60px 5%; text-align: center; flex: 1; }
+        
+        .header-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 50px; opacity: 0; animation: fadeInRight 1s ease-out forwards; }
+        .section-title { font-size: 2.5rem; color: var(--dark-blue); margin-bottom: 15px; }
+        .section-title span { color: var(--light-blue); }
+        .title-divider { width: 100px; height: 5px; background-color: var(--light-blue); border-radius: 5px; }
+        
+        /* زر العودة للصفحة السابقة */
+        .back-btn { align-self: flex-start; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 10px; color: var(--text-gray); text-decoration: none; font-weight: 700; transition: color 0.3s ease; }
+        .back-btn:hover { color: var(--light-blue); }
+
+        .parts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        
+        .part-card { background: #ffffff; padding: 40px 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.04); transition: transform 0.3s ease, box-shadow 0.3s ease; opacity: 0; animation: fadeInRight 1s ease-out forwards; border: 1px solid rgba(0, 170, 231, 0.1); display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
+        
+        /* لمسة تصميمية أعلى البطاقة */
+        .part-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--light-blue); transform: scaleX(0); transition: transform 0.3s ease; transform-origin: center; }
+        .part-card:hover::before { transform: scaleX(1); }
+        
+        .part-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0, 170, 231, 0.15); border-color: transparent; }
+        
+        .part-img-wrapper { width: 100%; height: 220px; margin-bottom: 25px; display: flex; justify-content: center; align-items: center; padding: 10px; }
+        .part-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); transition: transform 0.4s ease; }
+        .part-card:hover .part-img-wrapper img { transform: scale(1.15); }
+
+        .part-number { background: rgba(0, 170, 231, 0.1); color: var(--light-blue); width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%; font-weight: 800; font-size: 1.3rem; margin-bottom: 15px; border: 2px dashed var(--light-blue); }
+        .part-card h3 { font-size: 1.3rem; color: var(--dark-blue); margin-bottom: 15px; text-align: center; }
+        .part-card p { font-size: 0.95rem; color: var(--text-gray); line-height: 1.8; font-weight: 600; text-align: center; }
+
+        /* تأخير البطاقات */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.4s; }
+        .delay-4 { animation-delay: 0.5s; }
+        .delay-5 { animation-delay: 0.6s; }
+        .delay-6 { animation-delay: 0.7s; }
+
+        @keyframes fadeInRight { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
+
+        /* --- الفوتر --- */
+        footer { background-color: #ffffff; border-top: 2px solid rgba(0, 170, 231, 0.2); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-top: auto; }
+        .footer-info { display: flex; gap: 30px; align-items: center; }
+        .footer-info a { text-decoration: none; color: var(--dark-blue); transition: color 0.3s ease; }
+        .footer-info a:hover { color: var(--light-blue); }
+        .catalog-year { color: var(--light-blue); }
+
+        /* --- الموبايل --- */
+        @media (max-width: 992px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: #ffffff; flex-direction: column; gap: 15px; text-align: center; padding: 20px 0; box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); }
+            .nav-links.active { display: flex; animation: fadeInRight 0.3s ease-out; }
+            .section-title { font-size: 2rem; }
+            .footer-info { flex-direction: column; gap: 15px; text-align: center; }
+            footer { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل -->
+    <nav>
+        <div class="logo">
+            <img src="logo (1).png" alt="Fiber Cool Logo">
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="about.html">من نحن</a></li>
+            <li><a href="cooling-solutions.html" class="active-link">حلول التبريد</a></li>
+            <li><a href="air-systems.html">أنظمة التوزيع</a></li>
+            <li><a href="partners.html">شركاء النجاح</a></li>
+            <li><a href="contact.html" onclick="closeMenu()">اتصل بنا</a></li>
+        </ul>
+    </nav>
+
+    <!-- قسم نظرة من الداخل -->
+    <section class="inside-look-section">
+        
+        <!-- زر للعودة السريعة -->
+        <a href="cooling-solutions.html" class="back-btn"><i class="fa-solid fa-arrow-right"></i> عودة إلى حلول التبريد</a>
+
+        <div class="header-container">
+            <h1 class="section-title">أجزاء ذات <span>جودة عالية</span><br>(نظرة من الداخل)</h1>
+            <div class="title-divider"></div>
+        </div>
+
+        <div class="parts-grid">
+            <div class="part-card delay-1">
+                <div class="part-img-wrapper">
+                    <img src="Density Cellulose Cooling.png" alt="وسائط تبريد كرتون سيليلوزي">
+                </div>
+                <div class="part-number">1</div>
+                <h3>وسائط تبريد كرتون سيليلوزي</h3>
+                <p>كرتون سيليلوزي عالي الكثافة لتبريد أكثر كفاءة، واستهلاك أقل للماء، ومقاومة للتلف والانسداد.</p>
+            </div>
+
+            <div class="part-card delay-2">
+                <div class="part-img-wrapper">
+                    <img src="Galvanized Steel.png" alt="مروحة حديد مجلفن">
+                </div>
+                <div class="part-number">2</div>
+                <h3>مروحة حديد مجلفن</h3>
+                <p>مروحة متوازنة بدقة لضمان دوران ثابت دون اهتزازات، توفر تدفق هواء قوي يغطي مساحات واسعة.</p>
+            </div>
+
+            <div class="part-card delay-3">
+                <div class="part-img-wrapper">
+                    <img src="Ball Bearing.png" alt="رمان بلي عالي الجودة">
+                </div>
+                <div class="part-number">3</div>
+                <h3>رمان بلي عالي الجودة</h3>
+                <p>رمان بلي عالي التحمل لدوران سلس، واحتكاك أقل، وعمر أطول للمكونات.</p>
+            </div>
+
+            <div class="part-card delay-4">
+                <div class="part-img-wrapper">
+                    <img src="Duty V-Belts.png" alt="سيور عالية المتانة">
+                </div>
+                <div class="part-number">4</div>
+                <h3>سيور عالية المتانة</h3>
+                <p>سيور متينة تتحمل الأحمال العالية، مقاومة للتشقق وتضمن نقل حركة ثابت للمروحة.</p>
+            </div>
+
+            <div class="part-card delay-5">
+                <div class="part-img-wrapper">
+                    <img src="HP Water Pump.png" alt="ماتور ماء">
+                </div>
+                <div class="part-number">5</div>
+                <h3>ماتور ماء 0.5 حصان</h3>
+                <p>في المكيفات الكبيرة (10 إلى 25 حصان)، يوفر ضغطاً قوياً لتوزيع الماء على وسائط التبريد.</p>
+            </div>
+
+            <div class="part-card delay-6">
+                <div class="part-img-wrapper">
+                    <img src="Submersible Pump.png" alt="مضخة غاطسة">
+                </div>
+                <div class="part-number">6</div>
+                <h3>مضخة غاطسة</h3>
+                <p>خيار مرن يعمل بكفاءة عالية داخل خزان الماء، لتلبية احتياجات التبريد للأحجام الكبيرة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer id="footer-contact">
+        <div class="footer-info">
+            <a href="mailto:FIPERCOOL25@GMAIL.COM"><i class="fa-regular fa-envelope"></i> FIPERCOOL25@GMAIL.COM</a>
+            <span class="divider" style="color: var(--light-blue); display: inline-block;">|</span>
+            <a href="tel:0503439476"><i class="fa-solid fa-phone"></i> 0503439476</a>
+        </div>
+        <div class="catalog-year">website 2026</div>
+    </footer>
+
+    <script>
+        const navLinks = document.getElementById('navLinks');
+        function toggleMenu() { navLinks.classList.toggle('active'); }
+        function closeMenu() { if (window.innerWidth <= 992) navLinks.classList.remove('active'); }
+    </script>
+</body>
+</html>

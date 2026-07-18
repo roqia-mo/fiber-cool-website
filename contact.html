@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا | Fiber Cool</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- تم تحديث المكتبة لأحدث إصدار لضمان ظهور أيقونة X -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        :root {
+            --dark-blue: #002855;
+            --light-blue: #00aae7;
+            --bg-color: #f4f9ff;
+            --text-gray: #4a5568;
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: linear-gradient(135deg, #ffffff 0%, var(--bg-color) 100%); color: var(--dark-blue); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        /* --- شريط التنقل --- */
+        nav { background-color: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo img { height: 100px; object-fit: contain; }
+        .menu-toggle { display: none; font-size: 1.8rem; color: var(--dark-blue); cursor: pointer; transition: transform 0.3s ease; }
+        .menu-toggle:hover { transform: scale(1.1); color: var(--light-blue); }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links li a { text-decoration: none; color: var(--dark-blue); font-weight: 600; font-size: 1rem; transition: color 0.3s ease; position: relative; }
+        .nav-links li a::after { content: ''; position: absolute; width: 0; height: 2px; background-color: var(--light-blue); bottom: -5px; right: 0; transition: width 0.3s ease; }
+        .nav-links li a:hover, .nav-links li a.active-link { color: var(--light-blue); }
+        .nav-links li a:hover::after, .nav-links li a.active-link::after { width: 100%; }
+
+        /* --- قسم معلومات الاتصال --- */
+        .contact-section { padding: 60px 5%; flex: 1; display: flex; flex-direction: column; align-items: center; }
+        
+        .header-container { text-align: center; margin-bottom: 50px; opacity: 0; animation: fadeInRight 1s ease-out forwards; }
+        .section-title { font-size: 2.8rem; color: var(--dark-blue); margin-bottom: 10px; font-weight: 800; }
+        .title-divider { width: 80px; height: 4px; background-color: var(--light-blue); margin: 0 auto 15px auto; border-radius: 5px; }
+        .section-subtitle { font-size: 1.2rem; color: var(--text-gray); font-weight: 600; }
+
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; width: 100%; max-width: 1000px; margin-bottom: 40px; }
+        
+        .contact-card { display: flex; align-items: center; gap: 25px; background: #ffffff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid rgba(0, 170, 231, 0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; opacity: 0; animation: fadeInRight 1s ease-out forwards; text-decoration: none; }
+        .contact-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 170, 231, 0.1); border-color: var(--light-blue); }
+        
+        .contact-icon { width: 70px; height: 70px; border-radius: 50%; background: var(--bg-color); color: var(--light-blue); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 2px solid var(--light-blue); flex-shrink: 0; transition: all 0.3s; }
+        .contact-card:hover .contact-icon { background: var(--light-blue); color: #ffffff; }
+
+        .contact-info { text-align: right; width: 100%; }
+        .contact-info h3 { font-size: 1.3rem; color: var(--dark-blue); margin-bottom: 10px; position: relative; display: inline-block; }
+        .contact-info h3::after { content: ''; position: absolute; right: 0; bottom: -5px; width: 30px; height: 2px; background: var(--light-blue); }
+        .contact-info p { font-size: 1.1rem; color: var(--dark-blue); font-weight: 700; margin-top: 10px; direction: ltr; text-align: right; }
+
+        /* أيقونات السوشيال ميديا */
+        .social-icons-wrapper { display: flex; align-items: center; gap: 15px; margin-top: 15px; }
+        .social-btn { width: 35px; height: 35px; border-radius: 50%; background: var(--dark-blue); color: #ffffff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1rem; transition: background 0.3s; }
+        .social-btn:hover { background: var(--light-blue); }
+        .social-text { font-size: 1rem; font-weight: 700; color: var(--dark-blue); direction: ltr; }
+
+        .bottom-banner { background: #ffffff; border-radius: 20px; border: 2px solid var(--light-blue); width: 100%; max-width: 1000px; padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; gap: 30px; box-shadow: 0 10px 25px rgba(0, 170, 231, 0.05); opacity: 0; animation: fadeInRight 1s ease-out forwards; }
+        .banner-side { display: flex; align-items: center; gap: 20px; flex: 1; }
+        .support-side { border-left: 2px dashed rgba(0, 170, 231, 0.3); padding-left: 30px; }
+        .qr-side { justify-content: flex-end; }
+        .banner-icon { font-size: 3.5rem; color: var(--dark-blue); flex-shrink: 0; }
+        .mobile-icon { color: var(--light-blue); font-size: 3rem; }
+        .banner-text h3 { font-size: 1.2rem; color: var(--dark-blue); margin-bottom: 5px; position: relative; display: inline-block; }
+        .banner-text h3::after { content: ''; position: absolute; right: 0; bottom: -5px; width: 30px; height: 2px; background: var(--light-blue); }
+        .banner-text p { font-size: 0.95rem; color: var(--text-gray); font-weight: 600; margin-top: 10px; line-height: 1.6; }
+        .qr-text { text-align: left; }
+        .qr-text h3::after { right: auto; left: 0; }
+        .qr-image { width: 100px; height: 100px; border: 2px solid var(--light-blue); border-radius: 10px; padding: 5px; object-fit: contain; }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.4s; }
+        .delay-4 { animation-delay: 0.5s; }
+        .delay-5 { animation-delay: 0.7s; }
+
+        @keyframes fadeInRight { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
+
+        /* --- الفوتر --- */
+        footer { background-color: #ffffff; border-top: 2px solid rgba(0, 170, 231, 0.2); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-top: auto; }
+        .footer-info { display: flex; gap: 30px; align-items: center; }
+        .footer-info a { text-decoration: none; color: var(--dark-blue); transition: color 0.3s ease; }
+        .footer-info a:hover { color: var(--light-blue); }
+        .catalog-year { color: var(--light-blue); }
+
+        @media (max-width: 992px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: #ffffff; flex-direction: column; gap: 15px; text-align: center; padding: 20px 0; box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); }
+            .nav-links.active { display: flex; animation: fadeInRight 0.3s ease-out; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .bottom-banner { flex-direction: column; text-align: center; padding: 20px; }
+            .banner-side { flex-direction: column; text-align: center; width: 100%; }
+            .support-side { border-left: none; padding-left: 0; border-bottom: 2px dashed rgba(0, 170, 231, 0.3); padding-bottom: 30px; }
+            .qr-side { justify-content: center; flex-direction: column-reverse; }
+            .qr-text { text-align: center; }
+            .qr-text h3::after { right: 50%; transform: translateX(50%); left: auto; }
+            .footer-info { flex-direction: column; gap: 15px; text-align: center; }
+            footer { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <img src="logo (1).png" alt="Fiber Cool Logo">
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="about.html">من نحن</a></li>
+            <li><a href="cooling-solutions.html">حلول التبريد</a></li>
+            <li><a href="air-systems.html">أنظمة التوزيع</a></li>
+            <li><a href="partners.html">شركاء النجاح</a></li>
+            <li><a href="contact.html" class="active-link">اتصل بنا</a></li>
+        </ul>
+    </nav>
+
+    <section class="contact-section">
+        
+        <div class="header-container">
+            <h1 class="section-title">معلومات الاتصال والتواصل</h1>
+            <div class="title-divider"></div>
+            <p class="section-subtitle">يسعدنا تواصلكم معنا للاستفسارات، الطلبات، والدعم الفني</p>
+        </div>
+
+        <div class="contact-grid">
+            <a href="mailto:FIPERCOOL25@GMAIL.COM" class="contact-card delay-1">
+                <div class="contact-icon"><i class="fa-regular fa-envelope"></i></div>
+                <div class="contact-info">
+                    <h3>البريد الإلكتروني</h3>
+                    <p>FIPERCOOL25@GMAIL.COM</p>
+                </div>
+            </a>
+
+            <a href="https://wa.me/966503439476" target="_blank" class="contact-card delay-2">
+                <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="contact-info">
+                    <h3>الهاتف</h3>
+                    <p>+966503439476</p>
+                </div>
+            </a>
+
+            <div class="contact-card delay-3">
+                <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="contact-info">
+                    <h3>العنوان</h3>
+                    <p style="direction: rtl;">الرياض - المملكة العربية السعودية</p>
+                </div>
+            </div>
+
+            <div class="contact-card delay-4">
+                <div class="contact-icon"><i class="fa-solid fa-share-nodes"></i></div>
+                <div class="contact-info">
+                    <h3>وسائل التواصل الاجتماعي</h3>
+                    <div class="social-icons-wrapper">
+                        <span class="social-text">FIBER.COOL</span>
+                        <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <!-- تم تحديث الكود هنا لأيقونة X -->
+                        <a href="#" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-banner delay-5">
+            <div class="banner-side support-side">
+                <i class="fa-solid fa-headset banner-icon"></i>
+                <div class="banner-text">
+                    <h3>الدعم الفني وخدمة ما بعد البيع</h3>
+                    <p>فريقنا المتخصص جاهز لخدمتكم وتقديم الدعم<br>الفني وضمان أعلى مستويات الرضا.</p>
+                </div>
+            </div>
+
+            <div class="banner-side qr-side">
+                <div class="banner-text qr-text">
+                    <h3>امسح للوصول السريع</h3>
+                    <p>امسح رمز QR للوصول السريع إلى<br>بيانات الاتصال والتواصل معنا مباشرة.</p>
+                </div>
+                <img src="qr-code.png" alt="QR Code" class="qr-image">
+                <i class="fa-solid fa-mobile-screen-button banner-icon mobile-icon"></i>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-info">
+            <a href="mailto:FIPERCOOL25@GMAIL.COM"><i class="fa-regular fa-envelope"></i> FIPERCOOL25@GMAIL.COM</a>
+            <span class="divider" style="color: var(--light-blue); display: inline-block;">|</span>
+            <a href="https://wa.me/966503439476" target="_blank"><i class="fa-solid fa-phone"></i> 0503439476</a>
+        </div>
+        <div class="catalog-year">website 2026</div>
+    </footer>
+
+    <script>
+        const navLinks = document.getElementById('navLinks');
+        function toggleMenu() { navLinks.classList.toggle('active'); }
+        function closeMenu() { if (window.innerWidth <= 992) navLinks.classList.remove('active'); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حلول التبريد | Fiber Cool</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --dark-blue: #002855;
+            --light-blue: #00aae7;
+            --bg-color: #f4f9ff;
+            --text-gray: #4a5568;
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: linear-gradient(135deg, #ffffff 0%, var(--bg-color) 100%); color: var(--dark-blue); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        /* --- شريط التنقل --- */
+        nav { background-color: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo img { height: 100px; object-fit: contain; }
+        .menu-toggle { display: none; font-size: 1.8rem; color: var(--dark-blue); cursor: pointer; transition: transform 0.3s ease; }
+        .menu-toggle:hover { transform: scale(1.1); color: var(--light-blue); }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links li a { text-decoration: none; color: var(--dark-blue); font-weight: 600; font-size: 1rem; transition: color 0.3s ease; position: relative; }
+        .nav-links li a::after { content: ''; position: absolute; width: 0; height: 2px; background-color: var(--light-blue); bottom: -5px; right: 0; transition: width 0.3s ease; }
+        .nav-links li a:hover, .nav-links li a.active-link { color: var(--light-blue); }
+        .nav-links li a:hover::after, .nav-links li a.active-link::after { width: 100%; }
+
+        /* --- قسم الهيكل الخارجي (Hero Section) --- */
+        .fiberglass-section { padding: 60px 5%; display: flex; gap: 50px; align-items: center; }
+        .fiberglass-content { flex: 1; opacity: 0; animation: fadeInRight 1s ease-out forwards; }
+        .fiberglass-image { flex: 1; text-align: center; opacity: 0; animation: fadeInRight 1s ease-out forwards; animation-delay: 0.3s; }
+        .fiberglass-image img { max-width: 100%; height: auto; border-radius: 20px; box-shadow: 0 15px 40px rgba(0, 40, 85, 0.15); border: 4px solid #ffffff; }
+        
+        .section-title { font-size: 2.5rem; color: var(--dark-blue); margin-bottom: 15px; line-height: 1.3; }
+        .section-title span { color: var(--light-blue); }
+        .title-divider { width: 80px; height: 4px; background-color: var(--light-blue); margin-bottom: 25px; border-radius: 5px; }
+        .main-desc { font-size: 1.1rem; color: var(--text-gray); line-height: 1.8; margin-bottom: 30px; font-weight: 600; }
+
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;}
+        .spec-item { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; background: #ffffff; padding: 20px; border-radius: 15px; border-right: 3px solid var(--light-blue); box-shadow: 0 5px 15px rgba(0,0,0,0.03);}
+        .spec-item i { font-size: 1.8rem; color: var(--light-blue); }
+        .spec-item h4 { color: var(--dark-blue); font-size: 1.1rem; }
+        .spec-item p { font-size: 0.9rem; color: var(--text-gray); line-height: 1.5; font-weight: 600;}
+
+        /* --- زر الانتقال للأجزاء الداخلية --- */
+        .explore-btn-container { text-align: right; opacity: 0; animation: fadeInRight 1s ease-out forwards; animation-delay: 0.5s; }
+        .explore-btn { display: inline-flex; align-items: center; gap: 15px; background-color: var(--light-blue); color: #ffffff; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-size: 1.2rem; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0, 170, 231, 0.3); border: 2px solid transparent; }
+        .explore-btn:hover { background-color: #ffffff; color: var(--light-blue); border: 2px solid var(--light-blue); transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0, 170, 231, 0.4); }
+        .explore-btn i { font-size: 1.1rem; transition: transform 0.3s ease; }
+        .explore-btn:hover i { transform: translateX(-5px); }
+
+        @keyframes fadeInRight { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
+
+        /* --- الفوتر --- */
+        footer { background-color: #ffffff; border-top: 2px solid rgba(0, 170, 231, 0.2); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 700; color: var(--dark-blue); margin-top: auto; }
+        .footer-info { display: flex; gap: 30px; align-items: center; }
+        .footer-info a { text-decoration: none; color: var(--dark-blue); transition: color 0.3s ease; }
+        .footer-info a:hover { color: var(--light-blue); }
+        .catalog-year { color: var(--light-blue); }
+
+        /* --- الموبايل --- */
+        @media (max-width: 992px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: #ffffff; flex-direction: column; gap: 15px; text-align: center; padding: 20px 0; box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); }
+            .nav-links.active { display: flex; animation: fadeInRight 0.3s ease-out; }
+            .fiberglass-section { flex-direction: column; padding: 40px 5%; }
+            .fiberglass-image { order: -1; margin-bottom: 20px; }
+            .section-title { font-size: 2rem; }
+            .explore-btn-container { text-align: center; }
+            .footer-info { flex-direction: column; gap: 15px; text-align: center; }
+            footer { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل -->
+    <nav>
+        <div class="logo">
+            <img src="logo (1).png" alt="Fiber Cool Logo">
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="about.html">من نحن</a></li>
+            <li><a href="cooling-solutions.html" class="active-link">حلول التبريد</a></li>
+            <li><a href="air-systems.html">أنظمة التوزيع</a></li>
+            <li><a href="partners.html">شركاء النجاح</a></li>
+            <li><a href="contact.html" onclick="closeMenu()">اتصل بنا</a></li>
+        </ul>
+    </nav>
+
+    <!-- قسم الهيكل الخارجي -->
+    <section class="fiberglass-section">
+        <div class="fiberglass-content">
+            <h1 class="section-title">هيكل <span>فايبر جلاس</span> فائق المتانة</h1>
+            <div class="title-divider"></div>
+            <p class="main-desc">
+                هيكل المكيف مصنوع بالكامل من الفايبر جلاس عالي الجودة، المقاوم للصدأ والتآكل والرطوبة والعوامل الجوية القاسية، مما يضمن مظهراً أنيقاً وأداءً ثابتاً لسنوات طويلة.
+            </p>
+            
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <i class="fa-solid fa-wrench"></i>
+                    <h4>تصميم أنيق وسهل الصيانة</h4>
+                    <p>سطح أملس سهل التنظيف وتصميم يسهّل الوصول للأجزاء الداخلية عند الصيانة.</p>
+                </div>
+                <div class="spec-item">
+                    <i class="fa-solid fa-certificate"></i>
+                    <h4>ضمان 15 عاماً</h4>
+                    <p>ضمان يصل إلى 15 عاماً على الهيكل الخارجي لجودة تدوم طويلاً.</p>
+                </div>
+                <div class="spec-item">
+                    <i class="fa-solid fa-sun"></i>
+                    <h4>مقاوم للأجواء القاسية</h4>
+                    <p>مقاوم للشمس والرطوبة والحرارة، ومثالي للمناطق الصحراوية والساحلية.</p>
+                </div>
+            </div>
+
+            <!-- زر الانتقال للصفحة الجديدة -->
+            <div class="explore-btn-container">
+                <a href="internal-parts.html" class="explore-btn">
+                    استكشف الأجزاء الداخلية <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            </div>
+
+        </div>
+        <div class="fiberglass-image">
+            <img src="pepr6.png" alt="هيكل فايبر جلاس فايبير كول">
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer id="footer-contact">
+        <div class="footer-info">
+            <a href="mailto:FIPERCOOL25@GMAIL.COM"><i class="fa-regular fa-envelope"></i> FIPERCOOL25@GMAIL.COM</a>
+            <span class="divider" style="color: var(--light-blue); display: inline-block;">|</span>
+            <a href="tel:0503439476"><i class="fa-solid fa-phone"></i> 0503439476</a>
+        </div>
+        <div class="catalog-year"> website 2026</div>
+    </footer>
+
+    <script>
+        const navLinks = document.getElementById('navLinks');
+        function toggleMenu() { navLinks.classList.toggle('active'); }
+        function closeMenu() { if (window.innerWidth <= 992) navLinks.classList.remove('active'); }
+    </script>
+</body>
+</html>
